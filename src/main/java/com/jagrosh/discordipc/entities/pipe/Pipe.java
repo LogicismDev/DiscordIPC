@@ -79,7 +79,7 @@ public abstract class Pipe {
                 .getJSONObject("user").getString("username"), p.getJson().getJSONObject("data")
                         .getJSONObject("user").getString("discriminator"),  p.getJson().getJSONObject("data")
                         .getJSONObject("user").getLong("id"),  p.getJson().getJSONObject("data")
-                        .getJSONObject("user").getString("avatar"));
+                        .getJSONObject("user").optString("avatar", null));
 
                 LOGGER.debug(String.format("Found a valid client (%s) with packet: %s", pipe.build.name(), p.toString()));
                 // we're done if we found our first choice
