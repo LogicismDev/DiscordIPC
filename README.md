@@ -7,7 +7,8 @@
 
 # DiscordIPC
 
-Connect locally to the Discord client using IPC for a subset of RPC features like Rich Presence and Activity Join/Spectate
+Connect locally to the Discord client using IPC for a subset of RPC features like Rich Presence and Activity Join/Spectate.
+This Fork provides the customization of buttons seen in 2021.
 
 
 # Features
@@ -64,7 +65,9 @@ client.setListener(new IPCListener(){
             .setParty("party1234", 1, 6)
             .setMatchSecret("xyzzy")
             .setJoinSecret("join")
-            .setSpectateSecret("look");
+            .setSpectateSecret("look")
+            .setMainButtonText("Main Button")
+            .setMainButtonURL("https://www.youtube.com/c/Logicism");
         client.sendRichPresence(builder.build());
     }
 });
