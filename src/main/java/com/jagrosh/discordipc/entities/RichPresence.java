@@ -85,7 +85,8 @@ public class RichPresence
      */
     public JSONObject toJson()
     {
-        JSONObject jsonObject = new JSONObject().put("state", state)
+        return new JSONObject()
+                .put("state", state)
                 .put("details", details)
                 .put("timestamps", new JSONObject()
                         .put("start", startTimestamp==null ? null : startTimestamp.toEpochSecond())
@@ -97,25 +98,19 @@ public class RichPresence
                         .put("small_text", smallImageText))
                 .put("party", partyId==null ? null : new JSONObject()
                         .put("id", partyId)
-                        .put("size", new JSONArray().put(partySize).put(partyMax)));
-
-        if (!mainButtonText.isEmpty() || !secondaryButtonText.isEmpty()) {
-            jsonObject.put("buttons", new JSONArray()
-                    .put(0, new JSONObject()
-                            .put("label", mainButtonText)
-                            .put("url", mainButtonURL))
-                    .put(1, new JSONObject()
-                            .put("label", secondaryButtonText)
-                            .put("url", secondaryButtonURL)));
-        } else {
-            jsonObject.put("secrets", new JSONObject()
-                    .put("join", joinSecret)
-                    .put("spectate", spectateSecret)
-                    .put("match", matchSecret));
-        }
-
-        jsonObject.put("instance", instance);
-        return jsonObject;
+                        .put("size", new JSONArray().put(partySize).put(partyMax)))
+                .put("secrets", joinSecret==null ? null : new JSONObject()
+                        .put("join", joinSecret)
+                        .put("spectate", spectateSecret)
+                        .put("match", matchSecret))
+                .put("buttons", mainButtonText==null ? null : new JSONArray()
+                        .put(0, new JSONObject()
+                                .put("label", mainButtonText)
+                                .put("url", mainButtonURL))
+                        .put(1, new JSONObject()
+                                .put("label", secondaryButtonText)
+                                .put("url", secondaryButtonURL)))
+                .put("instance", instance);
     }
 
     /**
