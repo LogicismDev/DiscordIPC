@@ -42,12 +42,16 @@ public class RichPresence
     private final String matchSecret;
     private final String joinSecret;
     private final String spectateSecret;
+    private final String mainButtonText;
+    private final String mainButtonURL;
+    private final String secondaryButtonText;
+    private final String secondaryButtonURL;
     private final boolean instance;
     
     public RichPresence(String state, String details, OffsetDateTime startTimestamp, OffsetDateTime endTimestamp, 
             String largeImageKey, String largeImageText, String smallImageKey, String smallImageText, 
             String partyId, int partySize, int partyMax, String matchSecret, String joinSecret, 
-            String spectateSecret, boolean instance)
+            String spectateSecret, String mainButtonText, String mainButtonURL, String secondaryButtonText, String secondaryButtonURL, boolean instance)
     {
         this.state = state;
         this.details = details;
@@ -63,6 +67,10 @@ public class RichPresence
         this.matchSecret = matchSecret;
         this.joinSecret = joinSecret;
         this.spectateSecret = spectateSecret;
+        this.mainButtonText = mainButtonText;
+        this.mainButtonURL = mainButtonURL;
+        this.secondaryButtonText = secondaryButtonText;
+        this.secondaryButtonURL = secondaryButtonURL;
         this.instance = instance;
     }
 
@@ -95,6 +103,13 @@ public class RichPresence
                         .put("join", joinSecret)
                         .put("spectate", spectateSecret)
                         .put("match", matchSecret))
+                .put("buttons", new JSONArray()
+                        .put(0, new JSONObject()
+                                .put("label", mainButtonText)
+                                .put("url", mainButtonURL))
+                        .put(1, new JSONObject()
+                                .put("label", secondaryButtonText)
+                                .put("url", secondaryButtonURL)))
                 .put("instance", instance);
     }
 
@@ -120,6 +135,10 @@ public class RichPresence
         private String matchSecret;
         private String joinSecret;
         private String spectateSecret;
+        private String mainButtonText;
+        private String mainButtonURL;
+        private String secondaryButtonText;
+        private String secondaryButtonURL;
         private boolean instance;
 
         /**
@@ -132,7 +151,7 @@ public class RichPresence
             return new RichPresence(state, details, startTimestamp, endTimestamp, 
                     largeImageKey, largeImageText, smallImageKey, smallImageText, 
                     partyId, partySize, partyMax, matchSecret, joinSecret, 
-                    spectateSecret, instance);
+                    spectateSecret, mainButtonText, mainButtonURL, secondaryButtonText, secondaryButtonURL, instance);
         }
 
         /**
@@ -312,6 +331,58 @@ public class RichPresence
         public Builder setSpectateSecret(String spectateSecret)
         {
             this.spectateSecret = spectateSecret;
+            return this;
+        }
+
+        /**
+         * Sets the text for the Ask to Join Button.
+         *
+         * @param mainButtonText The text for the first button.
+         *
+         * @return This Builder.
+         */
+        public Builder setMainButtonText(String mainButtonText)
+        {
+            this.mainButtonText = mainButtonText;
+            return this;
+        }
+
+        /**
+         * Sets the text for the Spectate Button.
+         *
+         * @param secondaryButtonText The text for the first button.
+         *
+         * @return This Builder.
+         */
+        public Builder setSecondaryButtonText(String secondaryButtonText)
+        {
+            this.secondaryButtonText = secondaryButtonText;
+            return this;
+        }
+
+        /**
+         * Sets the text for the Ask to Join Button.
+         *
+         * @param mainButtonURL The text for the first button.
+         *
+         * @return This Builder.
+         */
+        public Builder setMainButtonURL(String mainButtonURL)
+        {
+            this.mainButtonURL = mainButtonURL;
+            return this;
+        }
+
+        /**
+         * Sets the text for the Spectate Button.
+         *
+         * @param secondaryButtonURL The text for the first button.
+         *
+         * @return This Builder.
+         */
+        public Builder setSecondaryButtonURL(String secondaryButtonURL)
+        {
+            this.secondaryButtonURL = secondaryButtonURL;
             return this;
         }
 
