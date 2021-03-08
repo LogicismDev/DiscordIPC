@@ -85,8 +85,7 @@ public class RichPresence
      */
     public JSONObject toJson()
     {
-        return new JSONObject()
-                .put("state", state)
+        JSONObject jsonObject = new JSONObject().put("state", state)
                 .put("details", details)
                 .put("timestamps", new JSONObject()
                         .put("start", startTimestamp==null ? null : startTimestamp.toEpochSecond())
@@ -98,19 +97,25 @@ public class RichPresence
                         .put("small_text", smallImageText))
                 .put("party", partyId==null ? null : new JSONObject()
                         .put("id", partyId)
-                        .put("size", new JSONArray().put(partySize).put(partyMax)))
-                .put("secrets", new JSONObject()
-                        .put("join", joinSecret)
-                        .put("spectate", spectateSecret)
-                        .put("match", matchSecret))
-                .put("buttons", new JSONArray()
-                        .put(0, new JSONObject()
-                                .put("label", mainButtonText)
-                                .put("url", mainButtonURL))
-                        .put(1, new JSONObject()
-                                .put("label", secondaryButtonText)
-                                .put("url", secondaryButtonURL)))
-                .put("instance", instance);
+                        .put("size", new JSONArray().put(partySize).put(partyMax)));
+
+        if (!mainButtonText.isEmpty() || !secondaryButtonText.isEmpty()) {
+            jsonObject.put("buttons", new JSONArray()
+                    .put(0, new JSONObject()
+                            .put("label", mainButtonText)
+                            .put("url", mainButtonURL))
+                    .put(1, new JSONObject()
+                            .put("label", secondaryButtonText)
+                            .put("url", secondaryButtonURL)));
+        } else {
+            jsonObject.put("secrets", new JSONObject()
+                    .put("join", joinSecret)
+                    .put("spectate", spectateSecret)
+                    .put("match", matchSecret));
+        }
+
+        jsonObject.put("instance", instance);
+        return jsonObject;
     }
 
     /**
