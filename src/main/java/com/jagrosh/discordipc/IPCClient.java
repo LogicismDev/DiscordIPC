@@ -271,6 +271,25 @@ public final class IPCClient implements Closeable
     }
 
     /**
+     * Gets the IPCClient's {@link User}.<p>
+     *
+     * This will return the User object from
+     * the Discord connected.
+     *
+     * Note that specifying ANY doesn't mean that this will return
+     * ANY. In fact this method should <b>never</b> return the
+     * value ANY.
+     *
+     * @return The {@link User} of this IPCClient, or null if not connected.
+     */
+    public User getCurrentUser()
+    {
+        if (pipe == null) return null;
+
+        return pipe.getCurrentUser();
+    }
+
+    /**
      * Constants representing events that can be subscribed to
      * using {@link #subscribe(Event)}.<p>
      *

@@ -21,6 +21,7 @@ import com.jagrosh.discordipc.IPCListener;
 import com.jagrosh.discordipc.entities.Callback;
 import com.jagrosh.discordipc.entities.DiscordBuild;
 import com.jagrosh.discordipc.entities.Packet;
+import com.jagrosh.discordipc.entities.User;
 import com.jagrosh.discordipc.exceptions.NoDiscordClientException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +39,7 @@ public abstract class Pipe {
     PipeStatus status = PipeStatus.CONNECTING;
     IPCListener listener;
     private DiscordBuild build;
+    private User currentUser;
     final IPCClient ipcClient;
     private final HashMap<String,Callback> callbacks;
 
@@ -73,6 +75,11 @@ public abstract class Pipe {
                 pipe.build = DiscordBuild.from(p.getJson().getJSONObject("data")
                         .getJSONObject("config")
                         .getString("api_endpoint"));
+                pipe.currentUser = new User(p.getJson().getJSONObject("data")
+                .getJSONObject("user").getString("username"), p.getJson().getJSONObject("data")
+                        .getJSONObject("user").getString("discriminator"),  p.getJson().getJSONObject("data")
+                        .getJSONObject("user").getLong("id"),  p.getJson().getJSONObject("data")
+                        .getJSONObject("user").getString("avatar"));
 
                 LOGGER.debug(String.format("Found a valid client (%s) with packet: %s", pipe.build.name(), p.toString()));
                 // we're done if we found our first choice
@@ -245,6 +252,10 @@ public abstract class Pipe {
     public DiscordBuild getDiscordBuild()
     {
         return build;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 
     // a list of system property keys to get IPC file from different unix systems.
