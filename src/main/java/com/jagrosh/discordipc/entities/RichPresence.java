@@ -85,6 +85,20 @@ public class RichPresence
      */
     public JSONObject toJson()
     {
+        JSONArray buttons = new JSONArray();
+
+        if (mainButtonText != null && mainButtonURL != null) {
+            buttons.put(0, new JSONObject()
+                    .put("label", mainButtonText)
+                    .put("url", mainButtonURL));
+        }
+
+        if (secondaryButtonText != null && secondaryButtonURL != null) {
+            buttons.put(1, new JSONObject()
+                    .put("label", secondaryButtonText)
+                    .put("url", secondaryButtonURL));
+        }
+
         return new JSONObject()
                 .put("state", state)
                 .put("details", details)
@@ -103,13 +117,7 @@ public class RichPresence
                         .put("join", joinSecret)
                         .put("spectate", spectateSecret)
                         .put("match", matchSecret))
-                .put("buttons", mainButtonText==null ? null : new JSONArray()
-                        .put(0, new JSONObject()
-                                .put("label", mainButtonText)
-                                .put("url", mainButtonURL))
-                        .put(1, new JSONObject()
-                                .put("label", secondaryButtonText)
-                                .put("url", secondaryButtonURL)))
+                .put("buttons", buttons)
                 .put("instance", instance);
     }
 
