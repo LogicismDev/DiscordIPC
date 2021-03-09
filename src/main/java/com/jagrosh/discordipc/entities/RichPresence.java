@@ -117,7 +117,7 @@ public class RichPresence
                         .put("join", joinSecret)
                         .put("spectate", spectateSecret)
                         .put("match", matchSecret))
-                .put("buttons", buttons)
+                .put("buttons", buttons.isEmpty() ? null : buttons)
                 .put("instance", instance);
     }
 
