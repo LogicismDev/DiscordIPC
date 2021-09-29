@@ -369,9 +369,9 @@ public class RichPresence
         }
 
         /**
-         * Sets the text for the Ask to Join Button.
+         * Sets the URL for the Ask to Join Button.
          *
-         * @param mainButtonURL The text for the first button.
+         * @param mainButtonURL The URL for the first button.
          *
          * @return This Builder.
          */
@@ -382,9 +382,9 @@ public class RichPresence
         }
 
         /**
-         * Sets the text for the Spectate Button.
+         * Sets the URL for the Spectate Button.
          *
-         * @param secondaryButtonURL The text for the first button.
+         * @param secondaryButtonURL The URL for the first button.
          *
          * @return This Builder.
          */
