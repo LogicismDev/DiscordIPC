@@ -53,11 +53,15 @@ public class WindowsPipe extends Pipe
 
     @Override
     public Packet read() throws IOException, JSONException {
-        while(file.length() == 0 && status == PipeStatus.CONNECTED)
-        {
-            try {
-                Thread.sleep(50);
-            } catch(InterruptedException ignored) {}
+        try {
+            while (file.length() == 0 && status == PipeStatus.CONNECTED) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        } catch (IOException e) {
+
         }
 
         if(status==PipeStatus.DISCONNECTED)
