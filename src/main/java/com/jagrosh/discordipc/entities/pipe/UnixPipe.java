@@ -52,11 +52,15 @@ public class UnixPipe extends Pipe
     {
         InputStream is = socket.getInputStream();
 
-        while(is.available() == 0 && status == PipeStatus.CONNECTED)
-        {
-            try {
-                Thread.sleep(50);
-            } catch(InterruptedException ignored) {}
+        try {
+            while (is.available() == 0 && status == PipeStatus.CONNECTED) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        } catch (IOException e) {
+
         }
 
         /*byte[] buf = new byte[is.available()];
