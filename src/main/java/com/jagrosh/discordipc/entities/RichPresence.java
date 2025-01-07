@@ -28,6 +28,7 @@ import org.json.JSONObject;
  */
 public class RichPresence
 {
+    private final ActivityType activityType;
     private final String state;
     private final String details;
     private final OffsetDateTime startTimestamp;
@@ -48,11 +49,12 @@ public class RichPresence
     private final String secondaryButtonURL;
     private final boolean instance;
     
-    public RichPresence(String state, String details, OffsetDateTime startTimestamp, OffsetDateTime endTimestamp, 
+    public RichPresence(ActivityType activityType, String state, String details, OffsetDateTime startTimestamp, OffsetDateTime endTimestamp,
             String largeImageKey, String largeImageText, String smallImageKey, String smallImageText, 
             String partyId, int partySize, int partyMax, String matchSecret, String joinSecret, 
             String spectateSecret, String mainButtonText, String mainButtonURL, String secondaryButtonText, String secondaryButtonURL, boolean instance)
     {
+        this.activityType = activityType;
         this.state = state;
         this.details = details;
         this.startTimestamp = startTimestamp;
@@ -100,6 +102,7 @@ public class RichPresence
         }
 
         return new JSONObject()
+                .put("type", activityType)
                 .put("state", state)
                 .put("details", details)
                 .put("timestamps", new JSONObject()
@@ -129,6 +132,7 @@ public class RichPresence
      */
     public static class Builder
     {
+        private ActivityType activityType;
         private String state;
         private String details;
         private OffsetDateTime startTimestamp;
@@ -156,10 +160,21 @@ public class RichPresence
          */
         public RichPresence build()
         {
-            return new RichPresence(state, details, startTimestamp, endTimestamp, 
+            return new RichPresence(activityType, state, details, startTimestamp, endTimestamp,
                     largeImageKey, largeImageText, smallImageKey, smallImageText, 
                     partyId, partySize, partyMax, matchSecret, joinSecret, 
                     spectateSecret, mainButtonText, mainButtonURL, secondaryButtonText, secondaryButtonURL, instance);
+        }
+
+        /**
+         * Sets the activity type for the user's current activity.
+         *
+         * @param activityType The activity type
+         * @return This Builder.
+         */
+        public Builder setActivityType(ActivityType activityType) {
+            this.activityType = activityType;
+            return this;
         }
 
         /**
