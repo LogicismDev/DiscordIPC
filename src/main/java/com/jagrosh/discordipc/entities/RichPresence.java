@@ -104,7 +104,7 @@ public class RichPresence
         }
 
         return new JSONObject()
-                .put("type", activityType)
+                .put("type", activityType.ordinal())
                 .put("state", state)
                 .put("details", details)
                 .put("timestamps", new JSONObject()
