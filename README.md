@@ -50,28 +50,36 @@ repositories {
 # Example
 
 Quick example, assuming you already have a GUI application
+
 ```java
+import com.jagrosh.discordipc.entities.ActivityType;
+
 IPCClient client = new IPCClient(345229890980937739L);
-client.setListener(new IPCListener(){
+client.
+
+setListener(new IPCListener() {
     @Override
-    public void onReady(IPCClient client)
+    public void onReady (IPCClient client)
     {
         RichPresence.Builder builder = new RichPresence.Builder();
-        builder.setState("West of House")
-            .setDetails("Frustration level: Over 9000")
-            .setStartTimestamp(OffsetDateTime.now())
-            .setLargeImage("canary-large", "Discord Canary")
-            .setSmallImage("ptb-small", "Discord PTB")
-            .setParty("party1234", 1, 6)
-            .setMatchSecret("xyzzy")
-            .setJoinSecret("join")
-            .setSpectateSecret("look")
-            .setMainButtonText("Main Button")
-            .setMainButtonURL("https://www.youtube.com/c/Logicism");
+        builder.setActivityType(ActivityType.WATCHING)
+                .setState("West of House")
+                .setDetails("Frustration level: Over 9000")
+                .setStartTimestamp(OffsetDateTime.now())
+                .setLargeImage("canary-large", "Discord Canary")
+                .setSmallImage("ptb-small", "Discord PTB")
+                .setParty("party1234", 1, 6)
+                .setMatchSecret("xyzzy")
+                .setJoinSecret("join")
+                .setSpectateSecret("look")
+                .setMainButtonText("Main Button")
+                .setMainButtonURL("https://www.youtube.com/c/Logicism");
         client.sendRichPresence(builder.build());
     }
 });
-client.connect();
+        client.
+
+connect();
 ```
 
 ### Other Examples
