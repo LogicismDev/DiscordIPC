@@ -40,6 +40,7 @@ public class RichPresence
     private final String partyId;
     private final int partySize;
     private final int partyMax;
+    private final String partyPrivacy;
     private final String matchSecret;
     private final String joinSecret;
     private final String spectateSecret;
@@ -51,7 +52,7 @@ public class RichPresence
     
     public RichPresence(ActivityType activityType, String state, String details, OffsetDateTime startTimestamp, OffsetDateTime endTimestamp,
             String largeImageKey, String largeImageText, String smallImageKey, String smallImageText, 
-            String partyId, int partySize, int partyMax, String matchSecret, String joinSecret, 
+            String partyId, int partySize, int partyMax, String partyPrivacy, String matchSecret, String joinSecret,
             String spectateSecret, String mainButtonText, String mainButtonURL, String secondaryButtonText, String secondaryButtonURL, boolean instance)
     {
         this.activityType = activityType;
@@ -66,6 +67,7 @@ public class RichPresence
         this.partyId = partyId;
         this.partySize = partySize;
         this.partyMax = partyMax;
+        this.partyPrivacy = partyPrivacy;
         this.matchSecret = matchSecret;
         this.joinSecret = joinSecret;
         this.spectateSecret = spectateSecret;
@@ -115,7 +117,8 @@ public class RichPresence
                         .put("small_text", smallImageText))
                 .put("party", partyId==null ? null : new JSONObject()
                         .put("id", partyId)
-                        .put("size", new JSONArray().put(partySize).put(partyMax)))
+                        .put("size", new JSONArray().put(partySize).put(partyMax))
+                        .put("privacy", partyPrivacy.equalsIgnoreCase("private") ? 0 : 1))
                 .put("secrets", joinSecret==null ? null : new JSONObject()
                         .put("join", joinSecret)
                         .put("spectate", spectateSecret)
@@ -144,6 +147,7 @@ public class RichPresence
         private String partyId;
         private int partySize;
         private int partyMax;
+        private String partyPrivacy;
         private String matchSecret;
         private String joinSecret;
         private String spectateSecret;
@@ -162,7 +166,7 @@ public class RichPresence
         {
             return new RichPresence(activityType, state, details, startTimestamp, endTimestamp,
                     largeImageKey, largeImageText, smallImageKey, smallImageText, 
-                    partyId, partySize, partyMax, matchSecret, joinSecret, 
+                    partyId, partySize, partyMax, partyPrivacy, matchSecret, joinSecret,
                     spectateSecret, mainButtonText, mainButtonURL, secondaryButtonText, secondaryButtonURL, instance);
         }
 
@@ -307,14 +311,16 @@ public class RichPresence
          * @param partyId The ID of the player's party.
          * @param partySize The current size of the player's party.
          * @param partyMax The maximum number of player's allowed in the party.
+         * @param partyPrivacy The party privacy to be set. Values allowed: private, public
          *
          * @return This Builder.
          */
-        public Builder setParty(String partyId, int partySize, int partyMax)
+        public Builder setParty(String partyId, int partySize, int partyMax, String partyPrivacy)
         {
             this.partyId = partyId;
             this.partySize = partySize;
             this.partyMax = partyMax;
+            this.partyPrivacy = partyPrivacy;
             return this;
         }
 
