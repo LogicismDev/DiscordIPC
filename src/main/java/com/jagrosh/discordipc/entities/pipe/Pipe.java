@@ -76,8 +76,8 @@ public abstract class Pipe {
                         .getJSONObject("config")
                         .getString("api_endpoint"));
                 pipe.currentUser = new User(p.getJson().getJSONObject("data")
-                .getJSONObject("user").getString("username"), p.getJson().getJSONObject("data")
-                        .getJSONObject("user").getString("discriminator"),  p.getJson().getJSONObject("data")
+                .getJSONObject("user").getString("username"), p.getJson().getJSONObject("data").getJSONObject("user").getString("global_name"),
+                        p.getJson().getJSONObject("data").getJSONObject("user").getString("discriminator"),  p.getJson().getJSONObject("data")
                         .getJSONObject("user").getLong("id"),  p.getJson().getJSONObject("data")
                         .getJSONObject("user").optString("avatar", null));
 

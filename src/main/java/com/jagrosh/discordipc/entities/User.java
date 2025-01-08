@@ -26,6 +26,7 @@ package com.jagrosh.discordipc.entities;
 public class User
 {
     private final String name;
+    private final String globalName;
     private final String discriminator;
     private final long id;
     private final String avatar;
@@ -34,13 +35,15 @@ public class User
      * Constructs a new {@link User}.<br>
      * Only implemented internally.
      * @param name user's name
+     * @param globalName user's display name
      * @param discriminator user's discrim
      * @param id user's id
      * @param avatar user's avatar hash, or {@code null} if they have no avatar
      */
-    public User(String name, String discriminator, long id, String avatar)
+    public User(String name, String globalName, String discriminator, long id, String avatar)
     {
         this.name = name;
+        this.globalName = globalName;
         this.discriminator = discriminator;
         this.id = id;
         this.avatar = avatar;
@@ -54,6 +57,16 @@ public class User
     public String getName()
     {
         return name;
+    }
+
+    /**
+     * Gets the Users display name.
+     *
+     * @return The Users display name.
+     */
+    public String getGlobalName()
+    {
+        return globalName;
     }
 
     /**

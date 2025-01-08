@@ -419,6 +419,7 @@ public final class IPCClient implements Closeable
                                     JSONObject u = data.getJSONObject("user");
                                     User user = new User(
                                         u.getString("username"),
+                                        u.getString("global_name"),
                                         u.getString("discriminator"),
                                         Long.parseLong(u.getString("id")),
                                         u.optString("avatar", null)
