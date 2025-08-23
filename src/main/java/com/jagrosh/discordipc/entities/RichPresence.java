@@ -30,7 +30,10 @@ public class RichPresence
 {
     private final ActivityType activityType;
     private final String state;
+    private final String stateURL;
     private final String details;
+    private final String detailsURL;
+    private final DisplayType displayType;
     private final OffsetDateTime startTimestamp;
     private final OffsetDateTime endTimestamp;
     private final String largeImageKey;
@@ -50,14 +53,17 @@ public class RichPresence
     private final String secondaryButtonURL;
     private final boolean instance;
     
-    public RichPresence(ActivityType activityType, String state, String details, OffsetDateTime startTimestamp, OffsetDateTime endTimestamp,
-            String largeImageKey, String largeImageText, String smallImageKey, String smallImageText, 
-            String partyId, int partySize, int partyMax, String partyPrivacy, String matchSecret, String joinSecret,
-            String spectateSecret, String mainButtonText, String mainButtonURL, String secondaryButtonText, String secondaryButtonURL, boolean instance)
+    public RichPresence(ActivityType activityType, String state, String stateURL, String details, String detailsURL, DisplayType displayType, OffsetDateTime startTimestamp, OffsetDateTime endTimestamp,
+                        String largeImageKey, String largeImageText, String smallImageKey, String smallImageText,
+                        String partyId, int partySize, int partyMax, String partyPrivacy, String matchSecret, String joinSecret,
+                        String spectateSecret, String mainButtonText, String mainButtonURL, String secondaryButtonText, String secondaryButtonURL, boolean instance)
     {
         this.activityType = activityType;
         this.state = state;
+        this.detailsURL = detailsURL;
+        this.stateURL = stateURL;
         this.details = details;
+        this.displayType = displayType;
         this.startTimestamp = startTimestamp;
         this.endTimestamp = endTimestamp;
         this.largeImageKey = largeImageKey;
@@ -105,8 +111,11 @@ public class RichPresence
 
         return new JSONObject()
                 .put("type", activityType.ordinal())
+                .put("status_display_type", displayType.ordinal())
                 .put("state", state)
+                .put("stateURL", stateURL)
                 .put("details", details)
+                .put("detailsURL", detailsURL)
                 .put("timestamps", new JSONObject()
                         .put("start", startTimestamp==null ? null : startTimestamp.toEpochSecond())
                         .put("end", endTimestamp==null ? null : endTimestamp.toEpochSecond()))
@@ -137,7 +146,10 @@ public class RichPresence
     {
         private ActivityType activityType;
         private String state;
+        private String stateURL;
         private String details;
+        private String detailsURL;
+        private DisplayType displayType;
         private OffsetDateTime startTimestamp;
         private OffsetDateTime endTimestamp;
         private String largeImageKey;
@@ -164,7 +176,7 @@ public class RichPresence
          */
         public RichPresence build()
         {
-            return new RichPresence(activityType, state, details, startTimestamp, endTimestamp,
+            return new RichPresence(activityType, state, stateURL, details, detailsURL, displayType, startTimestamp, endTimestamp,
                     largeImageKey, largeImageText, smallImageKey, smallImageText, 
                     partyId, partySize, partyMax, partyPrivacy, matchSecret, joinSecret,
                     spectateSecret, mainButtonText, mainButtonURL, secondaryButtonText, secondaryButtonURL, instance);
@@ -195,6 +207,19 @@ public class RichPresence
         }
 
         /**
+         * Sets the state url of the user's current party.
+         *
+         * @param stateURL The state url of the user's current party.
+         *
+         * @return This Builder.
+         */
+        public Builder setStateURL(String stateURL)
+        {
+            this.stateURL = stateURL;
+            return this;
+        }
+
+        /**
          * Sets details of what the player is currently doing.
          *
          * @param details The details of what the player is currently doing.
@@ -204,6 +229,32 @@ public class RichPresence
         public Builder setDetails(String details)
         {
             this.details = details;
+            return this;
+        }
+
+        /**
+         * Sets details url of what the player is currently doing.
+         *
+         * @param detailsURL The details url of what the player is currently doing.
+         *
+         * @return This Builder.
+         */
+        public Builder setDetailsURL(String detailsURL)
+        {
+            this.detailsURL = detailsURL;
+            return this;
+        }
+
+        /**
+         * Sets the display type of what the player is currently doing.
+         *
+         * @param displayType The display type of what the player is currently doing.
+         *
+         * @return This Builder.
+         */
+        public Builder setDisplayType(DisplayType displayType)
+        {
+            this.displayType = displayType;
             return this;
         }
 
