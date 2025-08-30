@@ -43,7 +43,7 @@ public class RichPresence
     private final String partyId;
     private final int partySize;
     private final int partyMax;
-    private final String partyPrivacy;
+    private final PartyPrivacy partyPrivacy;
     private final String matchSecret;
     private final String joinSecret;
     private final String spectateSecret;
@@ -55,7 +55,7 @@ public class RichPresence
     
     public RichPresence(ActivityType activityType, String state, String stateURL, String details, String detailsURL, DisplayType displayType, OffsetDateTime startTimestamp, OffsetDateTime endTimestamp,
                         String largeImageKey, String largeImageText, String smallImageKey, String smallImageText,
-                        String partyId, int partySize, int partyMax, String partyPrivacy, String matchSecret, String joinSecret,
+                        String partyId, int partySize, int partyMax, PartyPrivacy partyPrivacy, String matchSecret, String joinSecret,
                         String spectateSecret, String mainButtonText, String mainButtonURL, String secondaryButtonText, String secondaryButtonURL, boolean instance)
     {
         this.activityType = activityType;
@@ -113,9 +113,9 @@ public class RichPresence
                 .put("type", activityType.ordinal())
                 .put("status_display_type", displayType.ordinal())
                 .put("state", state)
-                .put("stateURL", stateURL)
+                .put("state_url", stateURL)
                 .put("details", details)
-                .put("detailsURL", detailsURL)
+                .put("details_url", detailsURL)
                 .put("timestamps", new JSONObject()
                         .put("start", startTimestamp==null ? null : startTimestamp.toEpochSecond())
                         .put("end", endTimestamp==null ? null : endTimestamp.toEpochSecond()))
@@ -127,7 +127,7 @@ public class RichPresence
                 .put("party", partyId==null ? null : new JSONObject()
                         .put("id", partyId)
                         .put("size", new JSONArray().put(partySize).put(partyMax))
-                        .put("privacy", partyPrivacy.equalsIgnoreCase("private") ? 0 : 1))
+                        .put("privacy", partyPrivacy.ordinal()))
                 .put("secrets", joinSecret==null ? null : new JSONObject()
                         .put("join", joinSecret)
                         .put("spectate", spectateSecret)
@@ -159,7 +159,7 @@ public class RichPresence
         private String partyId;
         private int partySize;
         private int partyMax;
-        private String partyPrivacy;
+        private PartyPrivacy partyPrivacy;
         private String matchSecret;
         private String joinSecret;
         private String spectateSecret;
@@ -366,7 +366,7 @@ public class RichPresence
          *
          * @return This Builder.
          */
-        public Builder setParty(String partyId, int partySize, int partyMax, String partyPrivacy)
+        public Builder setParty(String partyId, int partySize, int partyMax, PartyPrivacy partyPrivacy)
         {
             this.partyId = partyId;
             this.partySize = partySize;
